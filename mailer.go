@@ -7,24 +7,17 @@ import (
 	gomail "github.com/wneessen/go-mail"
 )
 
-type mailerAdapter struct {
+type mailer struct {
 	client *gomail.Client
 }
 
-func (a *mailerAdapter) NewMail(context.Context) (mailx.MailInstance, error) {
-	return &messageAdapter{client: a.client, msg: gomail.NewMsg()}, nil
+func (a *mailer) NewMail(context.Context) (mailx.MailInstance, error) {
+	return &mailInstance{client: a.client, msg: gomail.NewMsg()}, nil
 }
 
-type Config struct {
-	Host, Username, Password string
-	Port                     int
-	TLSPolicy                gomail.TLSPolicy
-	ImplicitTLS              bool
-}
-
-func New(config Config) (*mailerAdapter, error) {
+func New(config Config) (*mailer, error) {
 	options := []gomail.Option{
-		gomail.WithTLSPortPolicy(config.TLSPolicy),
+		gomail.WithTLSPortPolicy(gomail.TLSPolicy(config.TLSPolicy)),
 	}
 	if config.Port != 0 {
 		options = append(options, gomail.WithPort(config.Port))
@@ -45,16 +38,16 @@ func New(config Config) (*mailerAdapter, error) {
 	if err != nil {
 		return nil, err
 	} else {
-		return &mailerAdapter{client: client}, nil
+		return &mailer{client: client}, nil
 	}
 }
 
-type messageAdapter struct {
+type mailInstance struct {
 	client *gomail.Client
 	msg    *gomail.Msg
 }
 
-func (m *messageAdapter) Bcc(bccs []string) error {
+func (m *mailInstance) Bcc(bccs []string) error {
 	for _, bcc := range bccs {
 		if err := m.msg.AddBcc(bcc); err != nil {
 			return err
@@ -63,33 +56,33 @@ func (m *messageAdapter) Bcc(bccs []string) error {
 	return nil
 }
 
-func (m *messageAdapter) From(from string) error {
+func (m *mailInstance) From(from string) error {
 	return m.msg.From(from)
 }
 
-func (m *messageAdapter) HtmlBody(body string) error {
+func (m *mailInstance) HtmlBody(body string) error {
 	m.msg.SetBodyString(gomail.TypeTextHTML, body)
 	return nil
 }
 
-func (m *messageAdapter) ReplyTo(replyTo string) error {
+func (m *mailInstance) ReplyTo(replyTo string) error {
 	return m.ReplyTo(replyTo)
 }
 
-func (m *messageAdapter) Send(ctx context.Context) error {
+func (m *mailInstance) Send(ctx context.Context) error {
 	return m.client.DialAndSendWithContext(ctx, m.msg)
 }
 
-func (m *messageAdapter) Subject(sub string) error {
+func (m *mailInstance) Subject(sub string) error {
 	m.msg.Subject(sub)
 	return nil
 }
 
-func (m *messageAdapter) TextBody(body string) error {
+func (m *mailInstance) TextBody(body string) error {
 	m.msg.SetBodyString(gomail.TypeTextPlain, body)
 	return nil
 }
 
-func (m *messageAdapter) To(to []string) error {
+func (m *mailInstance) To(to []string) error {
 	return m.msg.To(to...)
 }
