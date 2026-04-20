@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.1](https://github.com/go-mailx/mailx-smtp/compare/v1.0.0...v1.0.1) (2026-04-20)
+
+
+### Other
+
+* **deps:** update lockfile ([1d37cc0](https://github.com/go-mailx/mailx-smtp/commit/1d37cc0a0623123d8393260d6a96cc8e8f4238c0))
+
+
+### Docs
+
+* add readme ([47455b5](https://github.com/go-mailx/mailx-smtp/commit/47455b5054d67780fa3cf37b0a865282c66649ea))
+
 ## 1.0.0 (2026-04-20)
 
 
