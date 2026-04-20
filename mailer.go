@@ -66,7 +66,7 @@ func (m *mailInstance) HtmlBody(body string) error {
 }
 
 func (m *mailInstance) ReplyTo(replyTo string) error {
-	return m.ReplyTo(replyTo)
+	return m.msg.ReplyTo(replyTo)
 }
 
 func (m *mailInstance) Send(ctx context.Context) error {
