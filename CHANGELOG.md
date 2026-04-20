@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/go-mailx/mailx-smtp/compare/v1.0.1...v1.0.2) (2026-04-20)
+
+
+### Bug Fixes
+
+* fix infinite recursion in ReplyTo ([54d8cd8](https://github.com/go-mailx/mailx-smtp/commit/54d8cd87ad7a390b4826738ed61f49befeab5814))
+
 ## [1.0.1](https://github.com/go-mailx/mailx-smtp/compare/v1.0.0...v1.0.1) (2026-04-20)
 
 
