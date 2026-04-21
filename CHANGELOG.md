@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.3](https://github.com/go-mailx/mailx-smtp/compare/v1.0.2...v1.0.3) (2026-04-21)
+
+
+### Docs
+
+* add CODEOWNERS ([774e6ad](https://github.com/go-mailx/mailx-smtp/commit/774e6ad1ed17cea55746ecae31a5c748aefd77d8))
+* fix readme link ([129c788](https://github.com/go-mailx/mailx-smtp/commit/129c788042a3b0fc6d591a0015bd117e558da644))
+
 ## [1.0.2](https://github.com/go-mailx/mailx-smtp/compare/v1.0.1...v1.0.2) (2026-04-20)
 
 
