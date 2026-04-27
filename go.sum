@@ -1,5 +1,7 @@
 github.com/go-mailx/mailx v1.0.0 h1:p3E2jyuomoy/+DBJq6dhZSVUJ57C3Esj8OxmR8/EQ2I=
 github.com/go-mailx/mailx v1.0.0/go.mod h1:Z2jHBpcChMeVuMYcHja71tyywxfSt4vVY3aoPbiHOI8=
+github.com/go-mailx/mailx v1.0.2 h1:UiC43qRjjMbMs4qHCHpNhxwimjF7QbdtIWKC8wZRJt4=
+github.com/go-mailx/mailx v1.0.2/go.mod h1:Z2jHBpcChMeVuMYcHja71tyywxfSt4vVY3aoPbiHOI8=
 github.com/wneessen/go-mail v0.7.2 h1:xxPnhZ6IZLSgxShebmZ6DPKh1b6OJcoHfzy7UjOkzS8=
 github.com/wneessen/go-mail v0.7.2/go.mod h1:+TkW6QP3EVkgTEqHtVmnAE/1MRhmzb8Y9/W3pweuS+k=
 golang.org/x/text v0.36.0 h1:JfKh3XmcRPqZPKevfXVpI1wXPTqbkE5f7JA92a55Yxg=
