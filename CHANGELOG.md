@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.3](https://github.com/go-mailx/mailx-smtp/compare/v1.0.2...v1.0.3) (2026-04-27)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/go-mailx/mailx to v1.0.2 ([#6](https://github.com/go-mailx/mailx-smtp/issues/6)) ([cc2426e](https://github.com/go-mailx/mailx-smtp/commit/cc2426ec0b82927ada70fc8245971c9495069c52))
+
+
+### Other
+
+* Configure Renovate ([#5](https://github.com/go-mailx/mailx-smtp/issues/5)) ([ba3fbde](https://github.com/go-mailx/mailx-smtp/commit/ba3fbdecb95ea5e33a858dd4e3609279207598e6))
+* **deps:** update googleapis/release-please-action action to v5 ([#7](https://github.com/go-mailx/mailx-smtp/issues/7)) ([bb618c9](https://github.com/go-mailx/mailx-smtp/commit/bb618c98ad2cd6f6203194509884f1cc7e78b0ba))
+
+
+### Docs
+
+* add CODEOWNERS ([774e6ad](https://github.com/go-mailx/mailx-smtp/commit/774e6ad1ed17cea55746ecae31a5c748aefd77d8))
+* fix readme link ([129c788](https://github.com/go-mailx/mailx-smtp/commit/129c788042a3b0fc6d591a0015bd117e558da644))
+
 ## [1.0.2](https://github.com/go-mailx/mailx-smtp/compare/v1.0.1...v1.0.2) (2026-04-20)
 
 
