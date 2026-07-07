@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/go-mailx/mailx-smtp/compare/v1.0.3...v1.0.4) (2026-07-07)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/wneessen/go-mail to v0.8.0 ([#10](https://github.com/go-mailx/mailx-smtp/issues/10)) ([c76687a](https://github.com/go-mailx/mailx-smtp/commit/c76687a9bd063677cda3469c6267adede5a29a36))
+
 ## [1.0.3](https://github.com/go-mailx/mailx-smtp/compare/v1.0.2...v1.0.3) (2026-05-13)
 
 
