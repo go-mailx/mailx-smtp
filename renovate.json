@@ -7,9 +7,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "internal/handlers/tutorials.go",
-        "frontend/ui/src/app/tutorials/registry/registry-tutorial.component.ts",
-        ".github/workflows/build-distr.yaml"
+        ".github/workflows/*"
       ],
       "matchStrings": [
         "\"(?<currentValue>[^\"]+)\",\\s+// renovate: datasource=(?<datasource>[^\\s]+) depName=(?<depName>[^\\s]+)",
