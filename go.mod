@@ -5,7 +5,7 @@ go 1.26.2
 toolchain go1.27.3
 
 require (
-	github.com/go-mailx/mailx v1.0.2
+	github.com/go-mailx/mailx v1.1.0
 	github.com/wneessen/go-mail v0.8.1
 )
 
