@@ -11,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/go-mailx/mailx"
 	gomail "github.com/wneessen/go-mail"
 )
 
@@ -112,7 +113,7 @@ func writeTestMail(t *testing.T, m *mailInstance) []byte {
 }
 
 const (
-	htmlBody = `<p>Hello <b>world</b></p>`
+	htmlBody = `<p>Hello <img src="cid:logo"></p>`
 	textBody = "Hello world"
 )
 
@@ -183,5 +184,96 @@ func TestSingleBody(t *testing.T) {
 				t.Errorf("body = %q, want %q", root.body, tt.body)
 			}
 		})
+	}
+}
+
+var (
+	logoPNG = []byte("\x89PNG\r\n\x1a\nnot really a png")
+	logo    = mailx.InlineAttachment{ContentID: "logo", ContentType: "image/png", Data: logoPNG}
+)
+
+func assertInlineLogo(t *testing.T, related *mimePart) {
+	t.Helper()
+	img := related.find("image/png")
+	if img == nil {
+		t.Fatal("multipart/related has no image/png part")
+	}
+	if got := firstHeader(img.header, "Content-ID"); got != "<logo>" {
+		t.Errorf("Content-ID = %q, want %q", got, "<logo>")
+	}
+	disposition, params, err := mime.ParseMediaType(firstHeader(img.header, "Content-Disposition"))
+	if err != nil {
+		t.Fatalf("parse Content-Disposition: %v", err)
+	}
+	if disposition != "inline" {
+		t.Errorf("Content-Disposition = %q, want inline", disposition)
+	}
+	if params["filename"] != "logo.png" {
+		t.Errorf("filename = %q, want logo.png", params["filename"])
+	}
+	if !bytes.Equal(img.body, logoPNG) {
+		t.Errorf("image data = %q, want %q", img.body, logoPNG)
+	}
+}
+
+func findRelated(t *testing.T, root *mimePart) *mimePart {
+	t.Helper()
+	related := root.find("multipart/related")
+	if related == nil {
+		t.Fatalf("no multipart/related part, top-level type is %s", root.mediaType)
+	}
+	return related
+}
+
+func TestInlineAttachmentWithHTMLBody(t *testing.T) {
+	m := newTestMail(t)
+	if err := m.HtmlBody(htmlBody); err != nil {
+		t.Fatal(err)
+	}
+	if err := m.AddInlineAttachment(logo); err != nil {
+		t.Fatal(err)
+	}
+	related := findRelated(t, parseMessage(t, writeTestMail(t, m)))
+
+	html := related.find("text/html")
+	if html == nil {
+		t.Fatal("multipart/related has no text/html part")
+	}
+	if string(html.body) != htmlBody {
+		t.Errorf("HTML body = %q, want %q", html.body, htmlBody)
+	}
+	assertInlineLogo(t, related)
+}
+
+func TestInlineAttachmentWithHTMLAndTextBody(t *testing.T) {
+	m := newTestMail(t)
+	if err := m.HtmlBody(htmlBody); err != nil {
+		t.Fatal(err)
+	}
+	if err := m.TextBody(textBody); err != nil {
+		t.Fatal(err)
+	}
+	if err := m.AddInlineAttachment(logo); err != nil {
+		t.Fatal(err)
+	}
+	related := findRelated(t, parseMessage(t, writeTestMail(t, m)))
+
+	assertAlternative(t, related)
+	assertInlineLogo(t, related)
+}
+
+func TestInlineFileName(t *testing.T) {
+	tests := map[string]string{
+		"image/png":                 "logo.png",
+		"image/jpeg":                "logo.jpg",
+		"image/png; name=\"x.png\"": "logo.png",
+		"application/x-unknown-foo": "logo",
+		"not a media type;;":        "logo",
+	}
+	for contentType, want := range tests {
+		got := inlineFileName(mailx.InlineAttachment{ContentID: "logo", ContentType: contentType})
+		if got != want {
+			t.Errorf("inlineFileName(%q) = %q, want %q", contentType, got, want)
+		}
 	}
 }

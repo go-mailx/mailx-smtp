@@ -14,6 +14,17 @@ go get github.com/go-mailx/mailx-smtp
 
 See the [smtp example](https://github.com/go-mailx/mailx/tree/main/examples/smtp) in the main repo.
 
+## Inline attachments
+
+The adapter implements `mailx.InlineAttachmentAdder`, so inline (embedded) images added with `mailx.Inline` are supported. They are sent in a `multipart/related` part together with the HTML body, which can reference them by Content-ID:
+
+```go
+mailer.Send(ctx,
+	mailx.HtmlBody(`<img src="cid:logo">`),
+	mailx.Inline("logo", "image/png", logoPNG),
+)
+```
+
 ## Config
 
 See [`pkg.go.dev/github.com/go-mailx/mailx-smtp`](https://pkg.go.dev/github.com/go-mailx/mailx-smtp) for all configuration options.

@@ -1,11 +1,15 @@
 package smtp
 
 import (
+	"bytes"
 	"context"
+	"mime"
 
 	"github.com/go-mailx/mailx"
 	gomail "github.com/wneessen/go-mail"
 )
+
+var _ mailx.InlineAttachmentAdder = (*mailInstance)(nil)
 
 type mailer struct {
 	client *gomail.Client
@@ -103,4 +107,37 @@ func (m *mailInstance) TextBody(body string) error {
 
 func (m *mailInstance) To(to []string) error {
 	return m.msg.To(to...)
+}
+
+func (m *mailInstance) AddInlineAttachment(a mailx.InlineAttachment) error {
+	return m.msg.EmbedReader(
+		inlineFileName(a),
+		bytes.NewReader(a.Data),
+		gomail.WithFileContentID("<"+a.ContentID+">"),
+		gomail.WithFileContentType(gomail.ContentType(a.ContentType)),
+	)
+}
+
+// preferredExtensions overrides mime.ExtensionsByType, whose result depends on
+// the system's MIME database and is sorted alphabetically (".jfif" for JPEG).
+var preferredExtensions = map[string]string{
+	"image/gif":     ".gif",
+	"image/jpeg":    ".jpg",
+	"image/png":     ".png",
+	"image/svg+xml": ".svg",
+	"image/webp":    ".webp",
+}
+
+func inlineFileName(a mailx.InlineAttachment) string {
+	mediaType, _, err := mime.ParseMediaType(a.ContentType)
+	if err != nil {
+		return a.ContentID
+	}
+	if ext, ok := preferredExtensions[mediaType]; ok {
+		return a.ContentID + ext
+	}
+	if exts, _ := mime.ExtensionsByType(mediaType); len(exts) > 0 {
+		return a.ContentID + exts[0]
+	}
+	return a.ContentID
 }
