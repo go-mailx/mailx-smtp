@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/go-mailx/mailx-smtp/compare/v1.0.5...v1.1.0) (2026-11-04)
+
+
+### Features
+
+* support inline attachments ([#14](https://github.com/go-mailx/mailx-smtp/issues/14)) ([7f51231](https://github.com/go-mailx/mailx-smtp/commit/7f512311a0521d9afa058534f72f736b2841d5fd))
+
+
+### Bug Fixes
+
+* keep HTML body when a text body is also set ([#17](https://github.com/go-mailx/mailx-smtp/issues/17)) ([0faccd8](https://github.com/go-mailx/mailx-smtp/commit/0faccd83084e7174724d195906c9394be8d6fc66))
+
 ## [1.0.5](https://github.com/go-mailx/mailx-smtp/compare/v1.0.4...v1.0.5) (2026-07-10)
 
 
