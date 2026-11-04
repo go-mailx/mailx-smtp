@@ -43,8 +43,24 @@ func New(config Config) (*mailer, error) {
 }
 
 type mailInstance struct {
-	client *gomail.Client
-	msg    *gomail.Msg
+	client   *gomail.Client
+	msg      *gomail.Msg
+	htmlBody *string
+	textBody *string
+}
+
+// setBody writes the text body before the HTML body, because the last part
+// of a multipart/alternative is the one clients prefer (RFC 2046).
+func (m *mailInstance) setBody() {
+	switch {
+	case m.textBody != nil && m.htmlBody != nil:
+		m.msg.SetBodyString(gomail.TypeTextPlain, *m.textBody)
+		m.msg.AddAlternativeString(gomail.TypeTextHTML, *m.htmlBody)
+	case m.htmlBody != nil:
+		m.msg.SetBodyString(gomail.TypeTextHTML, *m.htmlBody)
+	case m.textBody != nil:
+		m.msg.SetBodyString(gomail.TypeTextPlain, *m.textBody)
+	}
 }
 
 func (m *mailInstance) Bcc(bccs []string) error {
@@ -61,7 +77,8 @@ func (m *mailInstance) From(from string) error {
 }
 
 func (m *mailInstance) HtmlBody(body string) error {
-	m.msg.SetBodyString(gomail.TypeTextHTML, body)
+	m.htmlBody = &body
+	m.setBody()
 	return nil
 }
 
@@ -79,7 +96,8 @@ func (m *mailInstance) Subject(sub string) error {
 }
 
 func (m *mailInstance) TextBody(body string) error {
-	m.msg.SetBodyString(gomail.TypeTextPlain, body)
+	m.textBody = &body
+	m.setBody()
 	return nil
 }
 
