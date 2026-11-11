@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/go-mailx/mailx-smtp/compare/v1.1.1...v1.1.2) (2026-11-11)
+
+
+### Other
+
+* **deps:** update dependency go to v1.27.4 ([#22](https://github.com/go-mailx/mailx-smtp/issues/22)) ([4001baa](https://github.com/go-mailx/mailx-smtp/commit/4001baa47363d27cc86e054509ad210b9cae4fca))
+
 ## [1.1.1](https://github.com/go-mailx/mailx-smtp/compare/v1.1.0...v1.1.1) (2026-11-09)
 
 
