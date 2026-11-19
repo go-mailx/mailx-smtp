@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/go-mailx/mailx-smtp/compare/v1.1.1...v1.1.2) (2026-11-19)
+
+
+### Other
+
+* **deps:** update actions/setup-go action to v7.1.0 ([#24](https://github.com/go-mailx/mailx-smtp/issues/24)) ([f03a2c3](https://github.com/go-mailx/mailx-smtp/commit/f03a2c3c9b6a8ded5720b053caa5da89bd2a86a9))
+* **deps:** update dependency go to v1.27.4 ([#22](https://github.com/go-mailx/mailx-smtp/issues/22)) ([4001baa](https://github.com/go-mailx/mailx-smtp/commit/4001baa47363d27cc86e054509ad210b9cae4fca))
+
 ## [1.1.1](https://github.com/go-mailx/mailx-smtp/compare/v1.1.0...v1.1.1) (2026-11-09)
 
 
